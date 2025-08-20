@@ -48,6 +48,7 @@ void setup() {
     M5.begin(false, false, false);
     Atom.Init();  // sda  25     scl  21
     SERIAL_beign();
+    ESPNOW_setup();
     vSemaphoreCreateBinary(CtlSemaphore);
     xTaskCreatePinnedToCore(
         TaskMotion, "TaskMotion"  // A name just for task.  任务名称
@@ -69,5 +70,7 @@ void loop() {
         direction = !direction;
         //GetStatus();
         SERIAL_printValues();
+        // ボタンが押されたらid,x,y=99で送信
+        send_data(99, 99, 99);
     }
 }
